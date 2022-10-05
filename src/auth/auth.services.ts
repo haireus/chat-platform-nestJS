@@ -5,7 +5,7 @@ import { Injectable, Inject } from '@nestjs/common';
 
 @Injectable()
 export class AuthService implements IAuthService {
-  constructor(@Inject(SERVICES.USER) private userService: IUserService) {}
+  constructor() {}
 
   createUser() {}
 }
