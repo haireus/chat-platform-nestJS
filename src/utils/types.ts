@@ -3,5 +3,5 @@ export enum Routes {
 }
 
 export enum SERVICES {
-  AUTH_SERVICES = 'auth_services',
+  AUTH = 'auth',
 }
