@@ -12,6 +12,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Routes, SERVICES } from 'src/utils/types';
+import { instanceToPlain } from 'class-transformer';
 
 @Controller(Routes.AUTH)
 export class AuthController {
@@ -22,9 +23,8 @@ export class AuthController {
 
   @Post('register')
   @UsePipes(ValidationPipe)
-  registerUser(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    this.userService.createUser(createUserDto);
+  async registerUser(@Body() createUserDto: CreateUserDto) {
+    return instanceToPlain(await this.userService.createUser(createUserDto));
   }
 
   @Post('login')
