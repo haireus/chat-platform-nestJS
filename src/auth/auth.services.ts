@@ -1,11 +1,23 @@
 import { IUserService } from './../user/user';
-import { SERVICES } from 'src/utils/types';
+import { SERVICES, ValidateUserDetails } from 'src/utils/types';
 import { IAuthService } from './auth';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { compareHash } from 'src/utils/helpers';
 
 @Injectable()
 export class AuthService implements IAuthService {
-  constructor() {}
+  constructor(
+    @Inject(SERVICES.USER) private readonly userService: IUserService,
+  ) {}
 
-  createUser() {}
+  async validateUser(userCredentials: ValidateUserDetails) {
+    const user = await this.userService.findUser({
+      email: userCredentials.email,
+    });
+
+    if (!user)
+      throw new HttpException('Invalid Credentials', HttpStatus.UNAUTHORIZED);
+
+    return await compareHash(userCredentials.password, user.password);
+  }
 }

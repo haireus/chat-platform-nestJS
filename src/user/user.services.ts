@@ -1,5 +1,5 @@
 import { User } from './../utils/typeorm';
-import { CreateUserDetails } from './../utils/types';
+import { CreateUserDetails, FindUserParams } from './../utils/types';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IUserService } from './user';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,5 +26,9 @@ export class UserService implements IUserService {
       password: hashedPassword,
     });
     return newUser;
+  }
+
+  async findUser(findUserParams: FindUserParams): Promise<User> {
+    return this.userRepository.findOneBy(findUserParams);
   }
 }
