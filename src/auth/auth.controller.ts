@@ -10,10 +10,15 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
+  UseGuards,
+  Res,
+  HttpStatus,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { Routes, SERVICES } from 'src/utils/types';
 import { instanceToPlain } from 'class-transformer';
 import { UserLoginDto } from './dtos/UserLogin.dto';
+import { LocalAuthGuard } from 'src/auth/utils/guards';
 
 @Controller(Routes.AUTH)
 export class AuthController {
@@ -28,8 +33,11 @@ export class AuthController {
     return instanceToPlain(await this.userService.createUser(createUserDto));
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  loginUser(@Body() userLoginDto: UserLoginDto) {}
+  loginUser(@Res() res: Response) {
+    return res.sendStatus(HttpStatus.OK);
+  }
 
   @Get('status')
   status() {}
