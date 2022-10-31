@@ -8,7 +8,7 @@ import { User } from 'src/utils/typeorm';
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
   constructor(
-    @Inject(SERVICES.AUTH) private readonly userService: IUserService,
+    @Inject(SERVICES.USER) private readonly userService: IUserService,
   ) {
     super();
   }

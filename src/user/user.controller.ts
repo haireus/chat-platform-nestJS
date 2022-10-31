@@ -12,6 +12,6 @@ import {
 import { Routes, SERVICES } from 'src/utils/types';
 
 @Controller(Routes.USER)
-export class AuthController {
+export class UserController {
   constructor(@Inject(SERVICES.USER) private userService: IUserService) {}
 }
