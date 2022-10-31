@@ -3,8 +3,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import entities from './utils/typeorm';
+
 import { PassportModule } from '@nestjs/passport';
+import entities from './utils/typeorm';
+
 @Module({
   imports: [
     ConfigModule.forRoot({

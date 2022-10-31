@@ -4,10 +4,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { TypeormStore } from 'connect-typeorm/out';
+import { Session } from './utils/typeorm';
+import { getRepository } from 'typeorm/globals';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
   const { PORT, COOKIE_SECRET } = process.env;
+  const app = await NestFactory.create(AppModule);
+  const sessionRepository = getRepository(Session);
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
@@ -20,6 +24,7 @@ async function bootstrap() {
       cookie: {
         maxAge: 3600000 * 24, //cookie expires 1 day later
       },
+      store: new TypeormStore().connect(sessionRepository),
     }),
   );
 

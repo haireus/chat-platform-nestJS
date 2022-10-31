@@ -13,7 +13,7 @@ export class UserService implements IUserService {
   ) {}
 
   async createUser(userDetails: CreateUserDetails) {
-    const existedUser = await this.userRepository.findOneBy({
+    const existedUser = await this.userRepository.findOne({
       email: userDetails.email,
     });
 
@@ -29,6 +29,6 @@ export class UserService implements IUserService {
   }
 
   async findUser(findUserParams: FindUserParams): Promise<User> {
-    return this.userRepository.findOneBy(findUserParams);
+    return this.userRepository.findOne(findUserParams);
   }
 }
